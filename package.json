@@ -1,11 +1,18 @@
 {
   "name": "hydro-ui",
-  "version": "1.0.0",
-  "private": true,
-  "license": "MIT",
+  "version": "0.0.3",
+  "description": "",
+  "author": "1612492",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "tsup"
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "dependencies": {
     "react": "^18.2.0",

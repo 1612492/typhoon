@@ -14,7 +14,7 @@
     "downlevelIteration": true,
     "moduleResolution": "node",
     "baseUrl": "./",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "target": "ESNext",
     "allowJs": true,
