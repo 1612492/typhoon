@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "module": "ESNext",
     "target": "ESNext",
+    "outDir": "dist",
     "moduleResolution": "Node",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "lib": ["DOM", "ESNext", "DOM.Iterable"],
-    "noEmit": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationDir": "types"
   },
   "include": ["src", "global.d.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/stories"]
 }

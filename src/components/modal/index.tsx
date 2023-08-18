@@ -1,22 +1,14 @@
 import { ReactNode, useEffect, useState } from 'react';
-import style from './style.module.css';
-import { mergeStyles } from '../../utils/style';
+import './style.css';
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-  backdropClassName?: string;
-  modalClassName?: string;
+  backdropColor?: string;
 };
 
-export function Modal({
-  isOpen,
-  onClose,
-  children,
-  backdropClassName,
-  modalClassName,
-}: ModalProps) {
+export function Modal({ isOpen, onClose, children, backdropColor }: ModalProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -36,8 +28,11 @@ export function Modal({
     <div
       role="presentation"
       onClick={handleClose}
-      style={{ opacity: isMounted && isOpen ? 1 : 0 }}
-      className={mergeStyles(style.backdrop, backdropClassName)}
+      style={{
+        opacity: isMounted && isOpen ? 1 : 0,
+        background: backdropColor ?? 'rgb(31 41 55/0.9)',
+      }}
+      className="backdrop"
     >
       <div
         role="presentation"
@@ -46,7 +41,7 @@ export function Modal({
           opacity: isMounted && isOpen ? 1 : 0,
           transform: isMounted && isOpen ? 'scale(1)' : 'scale(0)',
         }}
-        className={mergeStyles(style.modal, modalClassName)}
+        className="modal"
       >
         {children}
       </div>

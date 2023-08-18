@@ -19,7 +19,7 @@ function ModalContainer() {
     <Fragment>
       <button onClick={() => setIsOpen(true)}>Open Modal</button>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        Modal
+        <div style={{ width: '20rem', height: '20rem', background: '#fff' }}></div>
       </Modal>
     </Fragment>
   );
