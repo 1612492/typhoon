@@ -1,14 +1,14 @@
 import { ReactNode, useEffect, useState } from 'react';
 import './style.css';
 
-type ModalProps = {
+type Props = {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
   backdropColor?: string;
 };
 
-export function Modal({ isOpen, onClose, children, backdropColor }: ModalProps) {
+export default function Modal({ isOpen, onClose, children, backdropColor }: Props) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {

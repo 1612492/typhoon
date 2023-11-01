@@ -1,3 +1,3 @@
-export function Accordion() {
+export default function Accordion() {
   return <div>Accordion</div>;
 }

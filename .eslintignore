@@ -1,0 +1,6 @@
+/src/stories
+/dist
+.eslintrc.js
+.prettierrc.js
+commitlint.config.js
+lint-staged.config.js

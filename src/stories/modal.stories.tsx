@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Fragment, useState } from 'react';
 
-import { Modal } from '../components/modal';
+import { Modal } from '../';
 
 const meta: Meta<typeof Modal> = {
   title: 'Modal',
