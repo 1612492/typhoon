@@ -18,7 +18,7 @@ export default defineConfig({
     resolve(),
     commonjs(),
     typescript({
-      tsconfig: './tsconfig.prod.json',
+      exclude: ['src/stories/**'],
     }),
     css({ output: 'index.css', minify: true }),
   ],
