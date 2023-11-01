@@ -1,5 +1,6 @@
-/** @type {import('eslint').Config} */
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2021: true,
@@ -26,7 +27,12 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
   ],
-  overrides: [],
+  overrides: [
+    {
+      files: ['*.js'],
+      extends: ['plugin:@typescript-eslint/disable-type-checked'],
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -35,18 +41,17 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     tsconfigRootDir: __dirname,
-    project: ['./tsconfig.json'],
+    project: ['./tsconfig.dev.json'],
   },
   plugins: ['react', 'import', '@typescript-eslint'],
   rules: {
-    'react/react-in-jsx-scope': 'off',
     'import/order': [
       'error',
       {
         groups: [['external', 'builtin'], 'internal', ['sibling', 'parent'], 'index'],
         pathGroups: [
           {
-            pattern: 'react',
+            pattern: '(react|react-dom)',
             group: 'external',
             position: 'before',
           },

@@ -1,50 +1,86 @@
-import { ReactNode, useEffect, useState } from 'react';
 import './style.css';
+import * as React from 'react';
+
+import { clsx } from '../../utils/clsx';
+
+enum Status {
+  Entering,
+  Entered,
+  Exiting,
+  Exited,
+}
 
 type Props = {
-  isOpen: boolean;
+  status: Status;
+  onOpen: () => void;
   onClose: () => void;
-  children: ReactNode;
-  backdropColor?: string;
 };
 
-export default function Modal({ isOpen, onClose, children, backdropColor }: Props) {
-  const [isMounted, setIsMounted] = useState(false);
+const Context = React.createContext<Props>({
+  status: Status.Exited,
+  onOpen: () => undefined,
+  onClose: () => undefined,
+});
 
-  useEffect(() => {
-    if (isOpen) {
-      setIsMounted(true);
-    }
-  }, [isOpen]);
+function Container({ children }: { children: React.ReactNode }) {
+  const [status, setStatus] = React.useState(Status.Exited);
 
-  const handleClose = () => {
-    setIsMounted(false);
-    setTimeout(() => onClose(), 500);
+  const onOpen = () => {
+    setStatus(Status.Entering);
+    setTimeout(() => setStatus(Status.Entered), 0);
+  };
+  const onClose = () => {
+    setStatus(Status.Exiting);
+    setTimeout(() => setStatus(Status.Exited), 500);
   };
 
-  if (!isOpen) return null;
+  return (
+    <Context.Provider
+      value={{
+        status,
+        onOpen,
+        onClose,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  );
+}
+
+function Trigger({ children }: { children: React.ReactNode }) {
+  const { onOpen } = React.useContext(Context);
+
+  return <button onClick={onOpen}>{children}</button>;
+}
+
+function Backdrop() {
+  const { status, onClose } = React.useContext(Context);
+
+  if (status === Status.Exited) return null;
 
   return (
     <div
       role="presentation"
-      onClick={handleClose}
-      style={{
-        opacity: isMounted && isOpen ? 1 : 0,
-        background: backdropColor ?? 'rgb(31 41 55/0.9)',
-      }}
+      style={{ opacity: status === Status.Entered ? 1 : 0 }}
       className="backdrop"
+      onClick={onClose}
+    />
+  );
+}
+
+function Content({ children, style }: { children: React.ReactNode; style: React.CSSProperties }) {
+  const { status } = React.useContext(Context);
+
+  if (status === Status.Exited) return null;
+
+  return (
+    <div
+      style={style}
+      className={clsx('modal', status === Status.Entered ? 'modal--entered' : 'modal--exited')}
     >
-      <div
-        role="presentation"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          opacity: isMounted && isOpen ? 1 : 0,
-          transform: isMounted && isOpen ? 'scale(1)' : 'scale(0)',
-        }}
-        className="modal"
-      >
-        {children}
-      </div>
+      {children}
     </div>
   );
 }
+
+export default { Container, Trigger, Backdrop, Content };

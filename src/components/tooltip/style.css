@@ -1,0 +1,34 @@
+.tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+  background: #000;
+  color: #fff;
+}
+
+.tooltip::after {
+  position: absolute;
+  top: -0.25rem;
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  transform: translateX(-50%) rotate(45deg);
+  background: #000;
+}
+
+.tooltip--start::after {
+  left: 1rem;
+}
+
+.tooltip--center::after {
+  left: 50%;
+}
+
+.tooltip--end::after {
+  right: 1rem;
+}

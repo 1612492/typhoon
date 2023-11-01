@@ -4,12 +4,4 @@ module.exports = {
   semi: true,
   singleQuote: true,
   trailingComma: 'es5',
-  overrides: [
-    {
-      files: '*.svg',
-      options: {
-        parser: 'html',
-      },
-    },
-  ],
 };

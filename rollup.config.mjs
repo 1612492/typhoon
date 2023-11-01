@@ -14,5 +14,12 @@ export default defineConfig({
   ],
 
   external: ['react', 'react-dom'],
-  plugins: [resolve(), commonjs(), typescript(), css({ output: 'index.css', minify: true })],
+  plugins: [
+    resolve(),
+    commonjs(),
+    typescript({
+      tsconfig: './tsconfig.prod.json',
+    }),
+    css({ output: 'index.css', minify: true }),
+  ],
 });
