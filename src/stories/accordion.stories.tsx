@@ -1,16 +1,33 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import * as React from 'react';
 
 import { Accordion } from '../';
 
-const meta = {
+const meta: Meta<typeof Accordion> = {
   title: 'Accordion',
   component: Accordion,
-} satisfies Meta<typeof Accordion>;
+};
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+function Container() {
+  return (
+    <Accordion
+      summary="A sample content"
+      details={
+        <div style={{ padding: '0.5rem' }}>
+          <div>Item 1</div>
+          <div>Item 2</div>
+          <div>Item 3</div>
+          <div>Item 4</div>
+        </div>
+      }
+    />
+  );
+}
+
 export const Default: Story = {
-  args: {},
+  render: () => <Container />,
 };

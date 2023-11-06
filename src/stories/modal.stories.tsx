@@ -11,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-function ModalContainer() {
+function Container() {
   return (
     <>
       <Modal.Container>
@@ -34,5 +34,5 @@ function ModalContainer() {
 }
 
 export const Default: Story = {
-  render: () => <ModalContainer />,
+  render: () => <Container />,
 };

@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
 
-import { Tooltip } from '../';
+import { useDraggable } from '../hooks';
 
-const meta: Meta<typeof Tooltip> = {
-  title: 'Tooltip',
-  component: Tooltip,
+const meta: Meta = {
+  title: 'Draggable',
 };
 
 export default meta;
@@ -13,7 +12,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 function Container() {
-  return <Tooltip hint="A sample tip content">Hover Me</Tooltip>;
+  const ref = useDraggable();
+
+  return <div ref={ref} style={{ width: 100, height: 100, border: '1px solid #000' }}></div>;
 }
 
 export const Default: Story = {

@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Dropdown } from '../';
 
-const meta = {
+const meta: Meta<typeof Dropdown> = {
   title: 'Dropdown',
   component: Dropdown,
-} satisfies Meta<typeof Dropdown>;
+};
 
 export default meta;
 

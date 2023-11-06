@@ -1,7 +1,8 @@
 import './style.css';
 import * as React from 'react';
 
-import { clsx } from '../../utils/clsx';
+import { useClickOutside } from '../../hooks';
+import { clsx } from '../../utils';
 
 enum Status {
   Entering,
@@ -54,27 +55,22 @@ function Trigger({ children }: { children: React.ReactNode }) {
 }
 
 function Backdrop() {
-  const { status, onClose } = React.useContext(Context);
-
-  if (status === Status.Exited) return null;
-
-  return (
-    <div
-      role="presentation"
-      style={{ opacity: status === Status.Entered ? 1 : 0 }}
-      className="backdrop"
-      onClick={onClose}
-    />
-  );
-}
-
-function Content({ children, style }: { children: React.ReactNode; style: React.CSSProperties }) {
   const { status } = React.useContext(Context);
 
   if (status === Status.Exited) return null;
 
+  return <div style={{ opacity: status === Status.Entered ? 1 : 0 }} className="backdrop" />;
+}
+
+function Content({ children, style }: { children: React.ReactNode; style: React.CSSProperties }) {
+  const { status, onClose } = React.useContext(Context);
+  const ref = useClickOutside(onClose);
+
+  if (status === Status.Exited) return null;
+
   return (
     <div
+      ref={ref}
       style={style}
       className={clsx('modal', status === Status.Entered ? 'modal--entered' : 'modal--exited')}
     >
@@ -83,4 +79,4 @@ function Content({ children, style }: { children: React.ReactNode; style: React.
   );
 }
 
-export default { Container, Trigger, Backdrop, Content };
+export const Modal = { Container, Trigger, Backdrop, Content };

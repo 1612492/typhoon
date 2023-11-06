@@ -1,5 +1,5 @@
 import * as React from 'react';
 
-export default function Dropdown() {
+export function Dropdown() {
   return <div>Dropdown</div>;
 }
