@@ -1,5 +1,4 @@
-import './style.css';
-import * as React from 'react';
+import { ReactNode, cloneElement, isValidElement, useState } from 'react';
 
 import { useTooltip } from '../../hooks';
 import { clsx } from '../../utils';
@@ -7,32 +6,38 @@ import { clsx } from '../../utils';
 type Props = {
   hint: React.ReactNode;
   position?: 'start' | 'center' | 'end';
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function Tooltip({ hint, position = 'start', children }: Props) {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { triggerRef, hintRef } = useTooltip({ isOpen, position });
 
   const handleMouseEnter = () => setIsOpen(true);
   const handleMouseLeave = () => setIsOpen(false);
 
-  const triggerElement = React.isValidElement(children) ? children : <span>{children}</span>;
-  const hintElement = React.isValidElement(hint) ? hint : <span>{hint}</span>;
+  const triggerElement = isValidElement(children) ? children : <span>{children}</span>;
+  const hintElement = isValidElement(hint) ? hint : <span>{hint}</span>;
 
   return (
     <>
-      {React.cloneElement(triggerElement, {
+      {cloneElement(triggerElement, {
         ...triggerElement.props,
         ref: triggerRef,
         onMouseEnter: handleMouseEnter,
         onMouseLeave: handleMouseLeave,
       })}
       {isOpen &&
-        React.cloneElement(hintElement, {
+        cloneElement(hintElement, {
           ...hintElement.props,
           ref: hintRef,
-          className: clsx('tooltip', `tooltip--${position}`, hintElement.props.className),
+          className: clsx(
+            "absolute top-0 left-0 p-1 rounded transition-opacity duration-500 bg-black text-white after:absolute after:-top-1 after:content-[''] after:w-2 after:h-2 after:bg-black after:rotate-45 after:-translate-x-1/2",
+            position === 'start' && 'after:left-4',
+            position === 'center' && 'after:left-1/2',
+            position === 'end' && 'after:right-4',
+            hintElement.props.className
+          ),
         })}
     </>
   );

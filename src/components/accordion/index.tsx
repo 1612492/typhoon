@@ -1,26 +1,28 @@
-import './style.css';
-import * as React from 'react';
+import { ReactNode, useState } from 'react';
 
 import { clsx } from '../../utils';
 import { ChevronIcon } from '../icons';
 
 type Props = {
-  summary: React.ReactNode;
-  details: React.ReactNode;
+  summary: ReactNode;
+  details: ReactNode;
 };
 
 export function Accordion({ summary, details }: Props) {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="accordion">
-      <button className="summary" onClick={() => setIsOpen((prevState) => !prevState)}>
+    <div className="relative overflow-hidden rounded border">
+      <button
+        className="w-full flex justify-between items-center gap-x-4 bg-gray-300 p-2"
+        onClick={() => setIsOpen((p) => !p)}
+      >
         {summary}
-        <ChevronIcon className={clsx('icon', isOpen ? 'icon--expanded' : 'icon--collapsed')} />
+        <ChevronIcon
+          className={clsx('w-6 h-6 transition-transform', isOpen ? 'rotate-180' : 'rotate-0')}
+        />
       </button>
-      <div className={clsx('details', isOpen ? 'details--expanded' : 'details--collapsed')}>
-        {details}
-      </div>
+      <div className={clsx('transition-all', isOpen ? 'max-h-screen' : 'max-h-0')}>{details}</div>
     </div>
   );
 }
