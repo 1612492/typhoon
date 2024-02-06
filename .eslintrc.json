@@ -24,7 +24,8 @@
     "plugin:jsx-a11y/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:storybook/recommended"
   ],
   "overrides": [
     {
@@ -40,10 +41,11 @@
     "ecmaVersion": "latest",
     "sourceType": "module",
     "tsconfigRootDir": ".",
-    "project": ["./tsconfig.json"]
+    "project": ["./tsconfig.json", "./tsconfig.node.json"]
   },
   "plugins": ["react", "import", "@typescript-eslint"],
   "rules": {
+    "react/react-in-jsx-scope": "off",
     "import/order": [
       "error",
       {

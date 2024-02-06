@@ -1,16 +1,16 @@
-import * as React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-export function useDraggable() {
-  const [node, setNode] = React.useState<HTMLElement>(null);
-  const [{ dx, dy }, setOffset] = React.useState({
+export function useDraggable<T extends HTMLElement>() {
+  const [node, setNode] = useState<T | null>(null);
+  const [{ dx, dy }, setOffset] = useState({
     dx: 0,
     dy: 0,
   });
-  const ref = React.useCallback((node: HTMLElement) => {
+  const ref = useCallback((node: T) => {
     setNode(node);
   }, []);
 
-  const handleMouseDown = React.useCallback(
+  const handleMouseDown = useCallback(
     (e: MouseEvent) => {
       const startX = e.clientX - dx;
       const startY = e.clientY - dy;
@@ -32,13 +32,13 @@ export function useDraggable() {
     [dx, dy]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!node) return;
 
     node.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
   }, [node, dx, dy]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!node) return;
 
     node.addEventListener('mousedown', handleMouseDown);

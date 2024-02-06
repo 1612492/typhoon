@@ -1,5 +1,5 @@
 import './style.css';
-import * as React from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 import { useClickOutside } from '../../hooks';
 import { clsx } from '../../utils';
@@ -17,14 +17,14 @@ type Props = {
   onClose: () => void;
 };
 
-const Context = React.createContext<Props>({
+const Context = createContext<Props>({
   status: Status.Exited,
   onOpen: () => undefined,
   onClose: () => undefined,
 });
 
 function Container({ children }: { children: React.ReactNode }) {
-  const [status, setStatus] = React.useState(Status.Exited);
+  const [status, setStatus] = useState(Status.Exited);
 
   const onOpen = () => {
     setStatus(Status.Entering);
@@ -49,13 +49,13 @@ function Container({ children }: { children: React.ReactNode }) {
 }
 
 function Trigger({ children }: { children: React.ReactNode }) {
-  const { onOpen } = React.useContext(Context);
+  const { onOpen } = useContext(Context);
 
   return <button onClick={onOpen}>{children}</button>;
 }
 
 function Backdrop() {
-  const { status } = React.useContext(Context);
+  const { status } = useContext(Context);
 
   if (status === Status.Exited) return null;
 
@@ -63,8 +63,8 @@ function Backdrop() {
 }
 
 function Content({ children, style }: { children: React.ReactNode; style: React.CSSProperties }) {
-  const { status, onClose } = React.useContext(Context);
-  const ref = useClickOutside(onClose);
+  const { status, onClose } = useContext(Context);
+  const ref = useClickOutside<HTMLDivElement>(onClose);
 
   if (status === Status.Exited) return null;
 

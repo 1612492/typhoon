@@ -1,22 +1,22 @@
-import * as React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-export function useClickOutside(handler: () => void) {
-  const [node, setNode] = React.useState<HTMLElement>(null);
+export function useClickOutside<T extends HTMLElement>(handler: () => void) {
+  const [node, setNode] = useState<T | null>(null);
 
-  const ref = React.useCallback((node: HTMLElement) => {
+  const ref = useCallback((node: T) => {
     setNode(node);
   }, []);
 
-  const handleClick = React.useCallback(
-    ({ target }: MouseEvent) => {
-      if (node && !node.contains(target as HTMLElement)) {
+  const handleClick = useCallback(
+    ({ target }: MouseEvent | TouchEvent) => {
+      if (node && !node.contains(target as T)) {
         handler();
       }
     },
     [handler, node]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener('click', handleClick, true);
     document.addEventListener('touchstart', handleClick, true);
 
