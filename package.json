@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/package.json",
   "name": "typhoon",
   "description": "React + TailwindCSS UI library",
   "version": "0.0.1",

@@ -5,15 +5,15 @@ type Props = {
   position?: 'start' | 'center' | 'end';
 };
 
-export function useTooltip({ isOpen, position }: Props) {
+export function useDropdown({ isOpen, position }: Props) {
   const triggerRef = useRef<HTMLElement>();
-  const hintRef = useRef<HTMLElement>();
+  const menuRef = useRef<HTMLElement>();
 
   useEffect(() => {
-    if (!isOpen || !triggerRef.current || !hintRef.current) return;
+    if (!isOpen || !triggerRef.current || !menuRef.current) return;
 
     const triggerRect = triggerRef.current.getBoundingClientRect();
-    const hintRect = hintRef.current.getBoundingClientRect();
+    const menuRect = menuRef.current.getBoundingClientRect();
 
     let left = 0;
     let top = 0;
@@ -24,19 +24,19 @@ export function useTooltip({ isOpen, position }: Props) {
         top = triggerRect.y + triggerRect.height + 6;
         break;
       case 'center':
-        left = triggerRect.x + (triggerRect.width - hintRect.width) / 2;
+        left = triggerRect.x + (triggerRect.width - menuRect.width) / 2;
         top = triggerRect.y + triggerRect.height + 6;
         break;
       case 'end':
-        left = triggerRect.x + triggerRect.width - hintRect.width;
+        left = triggerRect.x + triggerRect.width - menuRect.width;
         top = triggerRect.y + triggerRect.height + 6;
         break;
       default:
         break;
     }
 
-    hintRef.current.style.transform = `translate(${left}px, ${top}px)`;
-  }, [isOpen, position]);
+    menuRef.current.style.transform = `translate(${left}px, ${top}px)`;
+  }, [isOpen, menuRef, position]);
 
-  return { triggerRef, hintRef };
+  return { triggerRef, menuRef };
 }

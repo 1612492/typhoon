@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState } from 'react';
+import {
+  ButtonHTMLAttributes,
+  HTMLAttributes,
+  ReactNode,
+  createContext,
+  useContext,
+  useState,
+} from 'react';
 
 import { useClickOutside } from '../../hooks';
 import { clsx } from '../../utils';
@@ -22,7 +29,7 @@ const Context = createContext<Props>({
   onClose: () => undefined,
 });
 
-function Container({ children }: { children: React.ReactNode }) {
+function Container({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState(Status.Exited);
 
   const onOpen = () => {
@@ -47,10 +54,10 @@ function Container({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Trigger({ children }: { children: React.ReactNode }) {
+function Trigger(props: ButtonHTMLAttributes<HTMLButtonElement>) {
   const { onOpen } = useContext(Context);
 
-  return <button onClick={onOpen}>{children}</button>;
+  return <button {...props} onClick={onOpen} />;
 }
 
 function Backdrop() {
@@ -68,7 +75,7 @@ function Backdrop() {
   );
 }
 
-function Content({ children, style }: { children: React.ReactNode; style: React.CSSProperties }) {
+function Content(props: HTMLAttributes<HTMLDivElement>) {
   const { status, onClose } = useContext(Context);
   const ref = useClickOutside<HTMLDivElement>(onClose);
 
@@ -77,14 +84,13 @@ function Content({ children, style }: { children: React.ReactNode; style: React.
   return (
     <div
       ref={ref}
-      style={style}
+      {...props}
       className={clsx(
         'fixed top-1/2 left-1/2 bg-white transition-all -translate-x-1/2 -translate-y-1/2 duration-500',
-        status === Status.Entered ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+        status === Status.Entered ? 'opacity-100 scale-100' : 'opacity-0 scale-0',
+        props.className
       )}
-    >
-      {children}
-    </div>
+    />
   );
 }
 

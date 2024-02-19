@@ -15,8 +15,8 @@ function Container() {
     <>
       <Modal.Container>
         <Modal.Backdrop />
-        <Modal.Trigger>Open Modal</Modal.Trigger>
-        <Modal.Content style={{ width: 500 }}>
+        <Modal.Trigger className="border p-2 rounded">Click Me</Modal.Trigger>
+        <Modal.Content className="w-max max-w-md p-2 rounded">
           Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa
           sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat
           excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Accordion } from '../';
+import { ChevronIcon } from '../components/icons';
 
 const meta: Meta<typeof Accordion> = {
   title: 'Accordion',
@@ -23,6 +24,7 @@ function Container() {
           <div>Item 4</div>
         </div>
       }
+      icon={<ChevronIcon />}
     />
   );
 }

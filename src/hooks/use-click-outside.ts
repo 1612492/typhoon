@@ -1,19 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 export function useClickOutside<T extends HTMLElement>(handler: () => void) {
-  const [node, setNode] = useState<T | null>(null);
-
-  const ref = useCallback((node: T) => {
-    setNode(node);
-  }, []);
+  const ref = useRef<T | null>(null);
 
   const handleClick = useCallback(
     ({ target }: MouseEvent | TouchEvent) => {
-      if (node && !node.contains(target as T)) {
+      if (ref.current && !ref.current.contains(target as T)) {
         handler();
       }
     },
-    [handler, node]
+    [handler]
   );
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { useTooltip } from '../../hooks';
 import { clsx } from '../../utils';
 
 type Props = {
-  hint: React.ReactNode;
+  hint: ReactNode;
   position?: 'start' | 'center' | 'end';
   children: ReactNode;
 };
@@ -16,7 +16,7 @@ export function Tooltip({ hint, position = 'start', children }: Props) {
   const handleMouseEnter = () => setIsOpen(true);
   const handleMouseLeave = () => setIsOpen(false);
 
-  const triggerElement = isValidElement(children) ? children : <span>{children}</span>;
+  const triggerElement = isValidElement(children) ? children : <button>{children}</button>;
   const hintElement = isValidElement(hint) ? hint : <span>{hint}</span>;
 
   return (
